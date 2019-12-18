@@ -47,7 +47,7 @@ exports.handler = function(event, context, callback) {
     const feed = new RSS({
       title: user.full_name,
       description: user.biography,
-      feed_url: process.env.URL,
+      feed_url: `${process.env.URL}/.netlify/functions/feed`,
       pubDate: new Date(),
     });
 
@@ -57,6 +57,12 @@ exports.handler = function(event, context, callback) {
         description: node.display_url,
         url: `https://www.instagram.com/p/${node.shortcode}/`,
         date: new Date( node.taken_at_timestamp * 1000 ),
+        custom_namespaces: {
+          'content': 'http://purl.org/rss/1.0/modules/content/'
+        },
+        custom_elements: [
+          {'content:encoded': `<![CDATA[<img src="${node.display_url}" />]]>` }
+        ]
       });
     })
 
