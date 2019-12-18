@@ -1,0 +1,25 @@
+{
+  "name": "instagram-rss",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "postinstall": "netlify-lambda install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enwin/instagram-rss.git"
+  },
+  "author": "enwin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/enwin/instagram-rss/issues"
+  },
+  "homepage": "https://github.com/enwin/instagram-rss#readme",
+  "dependencies": {
+    "parse5-parser-stream": "^5.1.1",
+    "rss": "^1.2.2"
+  },
+  "devDependencies": {}
+}
