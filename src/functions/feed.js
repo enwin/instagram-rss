@@ -53,12 +53,10 @@ exports.handler = function(event, context, callback) {
 
     user.edge_owner_to_timeline_media.edges.forEach( ({node}) => {
       feed.item({
-        title: node.accessibility_caption,
+        title: node.edge_media_to_caption.edges[0].node.text,
+        description: node.display_url,
+        url: `https://www.instagram.com/p/${node.shortcode}/`,
         date: new Date( node.taken_at_timestamp * 1000 ),
-        enclosure:{
-          url  : node.display_url,
-          type : 'image/jpeg'
-        }
       });
     })
 
