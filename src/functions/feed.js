@@ -53,13 +53,13 @@ exports.handler = function(event, context, callback) {
       updated: new Date(),
     });
 
-    user.edge_owner_to_timeline_media.edges.forEach( ({node}, index) => {
+    user.edge_owner_to_timeline_media.edges.forEach( ({node}) => {
       feed.addItem({
         title: node.edge_media_to_caption.edges[0].node.text,
         description: node.display_url,
         url: `https://www.instagram.com/p/${node.shortcode}/`,
         id: `https://www.instagram.com/p/${node.shortcode}/`,
-        date: !index ? new Date() : new Date( node.taken_at_timestamp * 1000 ),
+        date: new Date( node.taken_at_timestamp * 1000 ),
         image: encodeURIComponent( node.display_url),
       });
     })
