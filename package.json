@@ -19,11 +19,11 @@
   "homepage": "https://github.com/enwin/instagram-rss#readme",
   "dependencies": {
     "@rollup/plugin-node-resolve": "^6.0.0",
+    "feed": "^4.0.0",
     "parse5-parser-stream": "^5.1.1",
     "rollup": "^1.27.13",
     "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-json": "^4.0.0",
-    "rss": "^1.2.2"
+    "rollup-plugin-json": "^4.0.0"
   },
   "devDependencies": {}
 }

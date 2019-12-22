@@ -1,6 +1,7 @@
 const https = require('https');
 const ParserStream = require('parse5-parser-stream');
-const RSS = require( 'rss' );
+import { Feed } from "feed";
+
 
 exports.handler = function(event, context, callback) {
   return new Promise((resolve, reject) => {
@@ -44,25 +45,22 @@ exports.handler = function(event, context, callback) {
   .then( data => {
     const user = data.entry_data.ProfilePage[0].graphql.user;
 
-    const feed = new RSS({
+    const feed = new Feed({
       title: user.full_name,
       description: user.biography,
-      feed_url: `${process.env.URL}/.netlify/functions/feed`,
-      pubDate: new Date(),
+      link: `${process.env.URL}/.netlify/functions/feed`,
+      id: `${process.env.URL}/.netlify/functions/feed`,
+      updated: new Date(),
     });
 
     user.edge_owner_to_timeline_media.edges.forEach( ({node}) => {
-      feed.item({
+      feed.addItem({
         title: node.edge_media_to_caption.edges[0].node.text,
         description: node.display_url,
         url: `https://www.instagram.com/p/${node.shortcode}/`,
+        id: `https://www.instagram.com/p/${node.shortcode}/`,
         date: new Date( node.taken_at_timestamp * 1000 ),
-        custom_namespaces: {
-          'content': 'http://purl.org/rss/1.0/modules/content/'
-        },
-        custom_elements: [
-          {'content:encoded': `<![CDATA[<img src="${node.display_url}" />]]>` }
-        ]
+        image: encodeURIComponent( node.display_url),
       });
     })
 
@@ -71,7 +69,7 @@ exports.handler = function(event, context, callback) {
       headers: {
         'content-type': 'application/xml; charset=utf-8'
       },
-      body: feed.xml({indent: true})
+      body: feed.rss2()
     }
   })
   .catch(error => {
