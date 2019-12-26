@@ -57,7 +57,7 @@ exports.handler = function(event, context, callback) {
       feed.addItem({
         title: node.edge_media_to_caption.edges[0].node.text,
         description: node.display_url,
-        url: `https://www.instagram.com/p/${node.shortcode}/`,
+        link: `https://www.instagram.com/p/${node.shortcode}/`,
         id: `https://www.instagram.com/p/${node.shortcode}/`,
         date: new Date( node.taken_at_timestamp * 1000 ),
         image: encodeURIComponent( node.display_url),
